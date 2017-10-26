@@ -1,12 +1,12 @@
 ## React Native Checkbox Field
 
+![React Native Checkbox Field](example.png?raw=true)
+
 React Native Checkbox Field is a configurable React Native component which works on both iOS and Android with minimal dependencies.
 
 - [Installation](#installation)
 - [Usage](#usage)
-- [Example](#example)
 - [Props](#props)
-- [Credits](#credits)
 
 ### Installation
 `npm install --save react-native-checkbox-field`
@@ -14,27 +14,13 @@ React Native Checkbox Field is a configurable React Native component which works
 ### Usage
 ```javascript
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { View, Text, StyleSheet } from 'react-native';
-import CheckboxField, { Checkbox } from 'react-native-checkbox-field';
+import { View, Text } from 'react-native';
+import CheckboxField from 'react-native-checkbox-field';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
-export default class CheckboxForm extends Component {
-  static propTypes = {
-    labelSide: PropTypes.oneOf([
-      'left',
-      'right',
-    ]),
-    children: PropTypes.element,
-  };
-
-  static defaultProps = {
-    labelSide: 'left',
-    children: <Text style={{ color: '#fff' }}>Y</Text>,
-  };
-
+export default class Form extends Component {
   state = {
     selected: false,
-    fieldLabel: 'Field A',
   };
 
   selectCheckbox = () => {
@@ -44,51 +30,22 @@ export default class CheckboxForm extends Component {
   };
 
   render() {
-    const { children } = this.props;
+    const { selected } = this.state;
 
     // Only onSelect prop is required
     return (
       <CheckboxField
-        label={this.state.fieldLabel}
         onSelect={this.selectCheckbox}
-        selected={this.state.selected}
-        disabled={this.props.disabled}
-        defaultColor="#fff"
-        selectedColor="#247fd2"
-        containerStyle={styles.containerStyle}
-        labelStyle={styles.labelStyle}
-        checkboxStyle={styles.checkboxStyle}
-        labelSide={this.props.labelSide}>
-        {children}
+        selected={selected}
+        label="Accept terms and conditions"
+        labelSide="right"
+      >
+        <Icon name="check" color="#fff" />
       </CheckboxField>
     )
   }
 }
-
-const styles = StyleSheet.create({
-  containerStyle: {
-    flex: 1,
-    flexDirection: 'row',
-    padding: 20,
-    alignItems: 'center',
-  },
-  labelStyle: {
-    flex: 1,
-  },
-  checkboxStyle: {
-    width: 26,
-    height: 26,
-    borderWidth: 2,
-    borderColor: '#ddd',
-    borderRadius: 5,
-  },
-});
 ```
-
-### Example
-Example project can be found for both Android and iOS in /examples
-
-![React Native Checkbox Field](example.png?raw=true)
 
 ### Props
 #### CheckboxField
