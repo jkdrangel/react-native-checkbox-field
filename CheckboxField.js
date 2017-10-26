@@ -1,50 +1,16 @@
-/* @flow */
-'use strict';
-
-import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import PropTypes from 'prop-types'
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { View, Text, TouchableOpacity } from 'react-native';
 import Styles from './Styles';
 import Checkbox from './Checkbox';
 
-const CheckboxField = (props) => {
-    return (
-        <TouchableOpacity onPress={props.onSelect} disabled={props.disabled}>
-            <View style={props.containerStyle}>
-                {
-                    props.labelSide === 'left' ?
-                        <Text style={props.labelStyle}>{ props.label }</Text>
-                        : null
-                }
-                <Checkbox
-                    selected={props.selected}
-                    disabled={props.disabled}
-                    onSelect={props.onSelect}
-                    defaultColor={props.defaultColor}
-                    selectedColor={props.selectedColor}
-                    disabledColor={props.disabledColor}
-                    checkboxStyle={props.checkboxStyle}>
-                    { props.children }
-                </Checkbox>
-                {
-                    props.labelSide === 'right' ?
-                        <Text style={[props.labelStyle, { textAlign: 'right' }]}>{ props.label }</Text>
-                        : null
-                }
-            </View>
-        </TouchableOpacity>
-    );
-};
-
-CheckboxField.propTypes = {
+export default class CheckboxField extends Component {
+  static propTypes = {
     // CheckboxField
     label: PropTypes.string,
-    containerStyle: PropTypes.oneOfType([ PropTypes.number, PropTypes.object, PropTypes.array ]),
-    labelStyle: PropTypes.oneOfType([ PropTypes.number, PropTypes.object, PropTypes.array ]),
-    labelSide: PropTypes.oneOf([
-        'left',
-        'right'
-    ]),
+    containerStyle: PropTypes.oneOfType([PropTypes.number, PropTypes.object, PropTypes.array]),
+    labelStyle: PropTypes.oneOfType([PropTypes.number, PropTypes.object, PropTypes.array]),
+    labelSide: PropTypes.oneOf(['left', 'right']),
 
     // Checkbox
     defaultColor: PropTypes.string,
@@ -52,26 +18,69 @@ CheckboxField.propTypes = {
     disabledColor: PropTypes.string,
     selected: PropTypes.bool,
     onSelect: PropTypes.func.isRequired,
-    checkboxStyle: PropTypes.oneOfType([ PropTypes.number, PropTypes.object, PropTypes.array ]),
-    children: PropTypes.element
-};
+    checkboxStyle: PropTypes.oneOfType([PropTypes.number, PropTypes.object, PropTypes.array]),
+    children: PropTypes.element.isRequired,
+    disabled: PropTypes.bool,
+  };
 
-CheckboxField.defaultProps = {
+  static defaultProps = {
     containerStyle: {
-        flex: 1,
-        flexDirection: 'row',
-        padding: 20,
-        alignItems: 'center'
+      flex: 1,
+      flexDirection: 'row',
+      padding: 20,
+      alignItems: 'center',
     },
+    label: null,
     labelStyle: {
-        flex: 1
+      flex: 1,
     },
     checkboxStyle: Styles.checkboxStyle,
     defaultColor: Styles.defaultColor,
     disabledColor: Styles.disabledColor,
     selectedColor: Styles.selectedColor,
-    onSelect: () => {},
-    labelSide: 'left'
-};
+    labelSide: 'left',
+    disabled: false,
+    selected: false,
+  };
 
-export default CheckboxField;
+  render() {
+    const {
+      onSelect,
+      disabled,
+      containerStyle,
+      labelSide,
+      labelStyle,
+      label,
+      selected,
+      defaultColor,
+      selectedColor,
+      disabledColor,
+      checkboxStyle,
+      children,
+    } = this.props;
+
+    return (
+      <TouchableOpacity onPress={onSelect} disabled={disabled}>
+        <View style={containerStyle}>
+          {
+            labelSide === 'left' ? <Text style={labelStyle}>{label}</Text> : null
+          }
+          <Checkbox
+            selected={selected}
+            disabled={disabled}
+            onSelect={onSelect}
+            defaultColor={defaultColor}
+            selectedColor={selectedColor}
+            disabledColor={disabledColor}
+            checkboxStyle={checkboxStyle}
+          >
+            {children}
+          </Checkbox>
+          {
+            labelSide === 'right' ? <Text style={[labelStyle, { textAlign: 'right' }]}>{label}</Text> : null
+          }
+        </View>
+      </TouchableOpacity>
+    );
+  }
+}

@@ -1,45 +1,56 @@
-/* @flow */
-'use strict';
-
-import React from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { TouchableOpacity, StyleSheet } from 'react-native';
-import PropTypes from 'prop-types'
 import Styles from './Styles';
 
-const Checkbox = (props) => {
-  let backgroundColor = {
-      backgroundColor: props.disabled ? props.disabledColor :
-      props.selected ? props.selectedColor : props.defaultColor
-  };
-
-    return (
-        <TouchableOpacity disabled={props.disabled} style={[props.checkboxStyle, backgroundColor, styles.center]} onPress={props.onSelect}>
-            { props.children }
-        </TouchableOpacity>
-    )
-};
-
-const styles = StyleSheet.create({
-    center: {
-        justifyContent: 'center',
-        alignItems: 'center'
-    }
-});
-
-Checkbox.propTypes = {
-    children: PropTypes.element,
+export default class Checkbox extends Component {
+  static propTypes = {
+    onSelect: PropTypes.func.isRequired,
+    children: PropTypes.element.isRequired,
     defaultColor: PropTypes.string,
     selectedColor: PropTypes.string,
+    disabledColor: PropTypes.string,
     selected: PropTypes.bool,
     disabled: PropTypes.bool,
-    onSelect: PropTypes.func.isRequired,
-    checkboxStyle: PropTypes.oneOfType([ PropTypes.number, PropTypes.object, PropTypes.array ])
-};
+    checkboxStyle: PropTypes.oneOfType([PropTypes.number, PropTypes.object, PropTypes.array]),
+  };
 
-Checkbox.defaultProps = {
+  static defaultProps = {
     checkboxStyle: Styles.checkboxStyle,
     defaultColor: Styles.defaultColor,
-    selectedColor: Styles.selectedColor
-};
+    selectedColor: Styles.selectedColor,
+    disabledColor: Styles.disabledColor,
+    disabled: false,
+    selected: false,
+  };
 
-export default Checkbox;
+  render() {
+    const {
+      disabled,
+      disabledColor,
+      selected,
+      selectedColor,
+      defaultColor,
+      onSelect,
+      checkboxStyle,
+      children,
+    } = this.props;
+    const baseColor = selected ? selectedColor : defaultColor;
+    const backgroundColor = {
+      backgroundColor: disabled ? disabledColor : baseColor,
+    };
+
+    return (
+      <TouchableOpacity disabled={disabled} style={[checkboxStyle, backgroundColor, styles.center]} onPress={onSelect}>
+        {children}
+      </TouchableOpacity>
+    );
+  }
+}
+
+const styles = StyleSheet.create({
+  center: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+});
