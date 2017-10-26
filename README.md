@@ -13,6 +13,11 @@ React Native Checkbox Field is a configurable React Native component which works
 
 ### Usage
 ```javascript
+import CheckboxField from 'react-native-checkbox-field'; // Field with label
+import { Checkbox } from 'react-native-checkbox-field'; // Checkbox only
+```
+
+```javascript
 import React, { Component } from 'react';
 import { View, Text } from 'react-native';
 import CheckboxField from 'react-native-checkbox-field';
