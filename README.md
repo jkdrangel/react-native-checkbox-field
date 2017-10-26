@@ -1,6 +1,6 @@
 ## React Native Checkbox Field
 
-React Native Checkbox Field is a configurable, stateless React Native component which works on both iOS and Android with minimal dependencies.
+React Native Checkbox Field is a configurable React Native component which works on both iOS and Android with minimal dependencies.
 
 - [Installation](#installation)
 - [Usage](#usage)
@@ -14,67 +14,72 @@ React Native Checkbox Field is a configurable, stateless React Native component 
 ### Usage
 ```javascript
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { View, Text, StyleSheet } from 'react-native';
-import { CheckboxField, Checkbox } from 'react-native-checkbox-field';
+import { CheckboxField } from 'react-native-checkbox-field';
 
-class CheckboxForm extends Component {
-    constructor(props) {
-        super(props);
+export default class CheckboxForm extends Component {
+  static propTypes = {
+    labelSide: PropTypes.oneOf([
+      'left',
+      'right',
+    ]),
+  };
 
-        this.state = {
-            selected: false,
-            fieldLabel: 'Field A'
-        };
+  static defaultProps = {
+    labelSide: 'left',
+  };
 
-        this.selectCheckbox = this.selectCheckbox.bind(this);
-    }
+  state = {
+    selected: false,
+    fieldLabel: 'Field A',
+  };
 
-    selectCheckbox() {
-        this.setState({
-            selected: !this.state.selected
-        });
-    }
+  selectCheckbox = () => {
+    this.setState({
+      selected: !this.state.selected,
+    });
+  };
 
-    render() {
-        const defaultColor = '#fff';
+  render() {
+    const defaultColor = '#fff';
 
-        // Only onSelect prop is required
-        return (
-            <CheckboxField
-                label={this.state.fieldLabel}
-                onSelect={this.selectCheckbox}
-                disabled={this.props.disabled}
-                disabledColor='rgb(236,236,236)'
-                selected={this.state.selected}
-                defaultColor={defaultColor}
-                selectedColor="#247fd2"
-                containerStyle={styles.containerStyle}
-                labelStyle={styles.labelStyle}
-                checkboxStyle={styles.checkboxStyle}
-                labelSide="left">
-                <Text style={{ color: defaultColor }}>Y</Text>
-            </CheckboxField>
-        )
-    }
+    // Only onSelect prop is required
+    return (
+      <CheckboxField
+        label={this.state.fieldLabel}
+        onSelect={this.selectCheckbox}
+        selected={this.state.selected}
+        disabled={this.props.disabled}
+        defaultColor={defaultColor}
+        selectedColor="#247fd2"
+        containerStyle={styles.containerStyle}
+        labelStyle={styles.labelStyle}
+        checkboxStyle={styles.checkboxStyle}
+        labelSide={this.props.labelSide}>
+        <Text style={{ color: defaultColor }}>Y</Text>
+      </CheckboxField>
+    )
+  }
 }
 
 const styles = StyleSheet.create({
-    containerStyle: {
-        flex: 1,
-        flexDirection: 'row',
-        padding: 20,
-        alignItems: 'center'
-    },
-    labelStyle: {
-        flex: 1
-    },
-    checkboxStyle: {
-        width: 26,
-        height: 26,
-        borderWidth: 2,
-        borderColor: '#ddd',
-        borderRadius: 5
-    }
+  containerStyle: {
+    flex: 1,
+    flexDirection: 'row',
+    padding: 20,
+    alignItems: 'center',
+  },
+  labelStyle: {
+    flex: 1,
+  },
+  checkboxStyle: {
+    width: 26,
+    height: 26,
+    borderWidth: 2,
+    borderColor: '#ddd',
+    borderRadius: 5,
+  },
 });
 ```
 
@@ -89,16 +94,16 @@ Example project can be found for both Android and iOS in /examples
 - `labelStyle` (Object) - The style of the text label
 ```
 {
-    flex: 1
+  flex: 1
 }
 ```
 - `containerStyle` (Object) - The style of the container surrounding the label and checkbox
 ```
 {
-    flex: 1,
-    flexDirection: 'row',
-    padding: 20,
-    alignItems: 'center'
+  flex: 1,
+  flexDirection: 'row',
+  padding: 20,
+  alignItems: 'center'
 }
 ```
 - `labelSide` (enum('left', 'right')) `left` - The side the label will be positioned with the checkbox.
@@ -114,12 +119,8 @@ Example project can be found for both Android and iOS in /examples
 - `checkboxStyle` (Object)
 ```
 {
-    borderWidth: 2,
-    borderColor: '#ddd',
-    borderRadius: 5
+  borderWidth: 2,
+  borderColor: '#ddd',
+  borderRadius: 5
 }
 ```
-
-### Credits
-- [Vincent Lo](http://www.vincentsylo.com/)
-- [Tquila ANZ](http://www.tquilaanz.com/)

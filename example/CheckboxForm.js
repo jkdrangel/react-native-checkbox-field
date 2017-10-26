@@ -1,6 +1,7 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { View, Text, StyleSheet } from 'react-native';
-import { CheckboxField, Checkbox } from 'react-native-checkbox-field';
+import { CheckboxField } from 'react-native-checkbox-field';
 
 export default class CheckboxForm extends Component {
   static propTypes = {
