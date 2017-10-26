@@ -1,6 +1,7 @@
-import Checkbox from './src/Checkbox';
-import CheckboxField from './src/CheckboxField';
+import Checkbox from './Checkbox';
+import CheckboxField from './CheckboxField';
 
+export default CheckboxField;
 export {
   Checkbox,
   CheckboxField,

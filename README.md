@@ -16,7 +16,7 @@ React Native Checkbox Field is a configurable React Native component which works
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { View, Text, StyleSheet } from 'react-native';
-import { CheckboxField } from 'react-native-checkbox-field';
+import CheckboxField, { Checkbox } from 'react-native-checkbox-field';
 
 export default class CheckboxForm extends Component {
   static propTypes = {
@@ -24,10 +24,12 @@ export default class CheckboxForm extends Component {
       'left',
       'right',
     ]),
+    children: PropTypes.element,
   };
 
   static defaultProps = {
     labelSide: 'left',
+    children: <Text style={{ color: '#fff' }}>Y</Text>,
   };
 
   state = {
@@ -42,7 +44,7 @@ export default class CheckboxForm extends Component {
   };
 
   render() {
-    const defaultColor = '#fff';
+    const { children } = this.props;
 
     // Only onSelect prop is required
     return (
@@ -51,13 +53,13 @@ export default class CheckboxForm extends Component {
         onSelect={this.selectCheckbox}
         selected={this.state.selected}
         disabled={this.props.disabled}
-        defaultColor={defaultColor}
+        defaultColor="#fff"
         selectedColor="#247fd2"
         containerStyle={styles.containerStyle}
         labelStyle={styles.labelStyle}
         checkboxStyle={styles.checkboxStyle}
         labelSide={this.props.labelSide}>
-        <Text style={{ color: defaultColor }}>Y</Text>
+        {children}
       </CheckboxField>
     )
   }

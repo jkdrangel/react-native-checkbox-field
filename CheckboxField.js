@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { View, Text, TouchableOpacity } from 'react-native';
-import Styles from '../Styles';
+import Styles from './Styles';
 import Checkbox from './Checkbox';
 
 export default class CheckboxField extends Component {
